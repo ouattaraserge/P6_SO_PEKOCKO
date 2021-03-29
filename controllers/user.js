@@ -11,6 +11,7 @@ exports.signup = (req, res, next) => {
         email: req.body.email,
         password: hash,
       });
+      const regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
       user
         .save()
         .then(() => res.status(201).json({ message: "Utilisateur créé !" }))

@@ -1,7 +1,7 @@
 const express = require("express");
-
 const router = express.Router();
 
+const xssSauce = require("../middleware/xss-sauce");
 const sauceCtrl = require("../controllers/sauce");
 const auth = require("../middleware/auth");
 const multer = require("../middleware/multer-config");
