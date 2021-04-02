@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 module.exports = (req, res, next) => {
   try {
@@ -6,9 +7,10 @@ module.exports = (req, res, next) => {
     console.log(token);
     const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
     const userId = decodedToken.userId;
+    console.log("-----");
     console.log(userId);
     if (req.body.userId && req.body.userId !== userId) {
-      throw "Utilisateur non valide !";
+      throw "ID utilisateur non valide !";
     } else {
       next();
     }

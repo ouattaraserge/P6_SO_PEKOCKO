@@ -46,24 +46,16 @@ exports.modifySauce = (req, res, next) => {
 
 //supprimer une sauce
 exports.deleteSauce = (req, res, next) => {
-  const jwt = require("jsonwebtoken");
-  const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
-  const userId = decodedToken.userId;
-  if (req.body.userId && req.body.userId == userId) {
-    Sauce.findOne({ _id: req.params.id })
-      .then((sauce) => {
-        const filename = sauce.imageUrl.split("/images/")[1];
-        fs.unlink(`images/${filename}`, () => {
-          Sauce.deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: "Sauce supprimée !" }))
-            .catch((error) => res.status(400).json({ error }));
-        });
-      })
-      .catch((error) => res.status(500).json({ error }));
-  } else {
-    res.status(403).json({ error });
-  }
+  Sauce.findOne({ _id: req.params.id })
+    .then((sauce) => {
+      const filename = sauce.imageUrl.split("/images/")[1];
+      fs.unlink(`images/${filename}`, () => {
+        Sauce.deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: "Sauce supprimée !" }))
+          .catch((error) => res.status(400).json({ error }));
+      });
+    })
+    .catch((error) => res.status(500).json({ error }));
 };
 
 //Trouver une seule sauce
