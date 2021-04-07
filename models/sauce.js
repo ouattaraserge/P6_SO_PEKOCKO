@@ -1,5 +1,4 @@
-const mongoose = require('mongoose'); // On importe Mongoose
-
+const mongoose = require("mongoose"); // On importe Mongoose
 
 const sauceSchema = mongoose.Schema({
   userId: { type: String, required: true },
