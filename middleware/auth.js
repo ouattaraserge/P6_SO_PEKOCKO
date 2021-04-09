@@ -12,8 +12,6 @@ module.exports = (req, res, next) => {
     if (req.body.userId && req.body.userId !== userId) {
       throw "ID utilisateur non valide !";
     } else {
-      req.token = token;
-      req.user = userId; // On ajoute l'id de l'utilisateur pour son authentification donc pour les routes delete et put
       next();
     }
   } catch {
