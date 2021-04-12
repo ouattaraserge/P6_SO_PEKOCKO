@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { findOne } = require("../models/sauce");
 require("dotenv").config();
 
 module.exports = (req, res, next) => {
@@ -21,3 +22,19 @@ module.exports = (req, res, next) => {
     });
   }
 };
+
+/*module.exports = (req, res, next) => {
+  console.log(req.user);
+  Sauce.findOne({ _id: req.params.id })
+    .then(sauce => {
+      console.log("Propriétaire : " + sauce.userId);
+      console.log("User connecté : " + req.user);
+      if (sauce.userId === req.user) {
+        next();
+      } else {
+        res.status(401).json({
+          message: "Vous n'êtes pas le propriétaire de cette sauce donc vous ne pouvez pas y toucher"
+        });
+      }
+    });
+}*/

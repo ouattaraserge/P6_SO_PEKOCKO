@@ -32,8 +32,8 @@ exports.createSauce = (req, res, next) => {
 };
 
 //Modifier la sauce
-/*exports.modifySauce = (req, res, next) => {
-  const paramId = req.params.id;
+
+exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file
     ? {
         ...JSON.parse(req.body.sauce),
@@ -43,39 +43,10 @@ exports.createSauce = (req, res, next) => {
   Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
     .then(() => res.status(200).json({ message: "Objet modifié !" }))
     .catch((error) => res.status(400).json({ error }));
-};*/
-
-exports.modifySauce = (req, res, next) => {
-  if (req.file) {
-    Sauce.findOne({ _id: req.params.id })
-      .then((sauce) => {
-        const filename = sauce.imageUrl.split("/images")[1];
-        //suppression de l'image de la sauce qui va être remplacée
-        fs.unlink(`images/${filename}`, (err) => {
-          if (err) throw err;
-        });
-      })
-      .catch((error) => res.status(400).json({ error }));
-  } else {
-  }
-
-  //l'objet qui va être envoyé dans la base de donnée
-  const sauceObject = req.file
-    ? {
-        ...JSON.parse(req.body.sauce),
-        imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
-      }
-    : { ...req.body };
-
-  //update dans la base de donnée
-  Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-    .then(() => res.status(200).json({ message: "objet mise à jour" }))
-    .catch((error) => res.status(404).json({ error }));
 };
 
 //supprimer une sauce
 exports.deleteSauce = (req, res, next) => {
-  const paramId = req.params.id;
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => {
       const filename = sauce.imageUrl.split("/images/")[1];
@@ -89,7 +60,6 @@ exports.deleteSauce = (req, res, next) => {
 };
 //Trouver une seule sauce
 exports.getOneSauce = (req, res, next) => {
-  const paramId = req.params.id;
   Sauce.findOne({ _id: req.params.id })
     .then((sauce) => res.status(200).json(sauce))
     .catch((error) => res.status(404).json({ error }));
