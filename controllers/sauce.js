@@ -46,7 +46,7 @@ exports.modifySauce = (req, res, next) => {
         fs.unlink(`images/${filename}`, () => {
           // suppression de l'image à remplacer
           Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id }) //mise à jour d'une sauce
-            .then(() => res.status(200).json({ message: "Sauce et image modifiée" }))
+            .then(() => res.status(200).json({ message: "Sauce et image modifiées" }))
             .catch((error) => res.status(400).json({ error }));
         });
       })

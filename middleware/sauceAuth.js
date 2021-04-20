@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const sauce = require("../models/sauce");
 const sanitize = require("mongo-sanitize");
+
 module.exports = (req, res, next) => {
   const id = sanitize(req.params.id);
 
