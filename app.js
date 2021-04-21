@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -6,7 +5,9 @@ const path = require("path");
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
 const helmet = require("helmet");
+require("dotenv").config();
 
+//Connection à la base de données
 mongoose
   .connect("mongodb+srv://sergeo:Esinturl0@OGS@cluster0.0paei.mongodb.net/P6_SO_PEKOCKO?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
@@ -23,7 +24,6 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 app.use(helmet());
-
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/api/auth", userRoutes);
