@@ -25,10 +25,6 @@ exports.createSauce = (req, res, next) => {
         error: error,
       });
     });
-  sauceObject.likes = 0;
-  sauceObject.dislikes = 0;
-  sauceObject.usersLiked = Array();
-  sauceObject.usersDisliked = Array();
 };
 
 //Modifier la sauce

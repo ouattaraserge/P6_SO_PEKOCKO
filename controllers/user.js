@@ -1,14 +1,11 @@
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const mongoSanitize = require("mongo-sanitize");
 const User = require("../models/User");
 const crypto = require("crypto").randomBytes(64).toString("hex");
 RAMDOM_TOKEN_SECRET = crypto;
 
 exports.signup = (req, res, next) => {
-  const mail = mongoSanitize(req.body.email);
-  const password = mongoSanitize(req.body.password);
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -16,7 +13,6 @@ exports.signup = (req, res, next) => {
         email: req.body.email,
         password: hash,
       });
-      const regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
       user
         .save()
         .then(() => res.status(201).json({ message: "Utilisateur créé !" }))
@@ -26,8 +22,6 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-  const mail = mongoSanitize(req.body.email);
-  const password = mongoSanitize(req.body.password);
   User.findOne({ email: req.body.email })
     .then((user) => {
       if (!user) {
