@@ -7,10 +7,13 @@ const userRoutes = require("./routes/user");
 
 const helmet = require("helmet");
 require("dotenv").config();
-console.log(process.env.USER_DB);
+
 //Connection à la base de données
 mongoose
-  .connect(`mongodb+srv://${process.env.USER_DB}:Esinturl0@OGS@cluster0.0paei.mongodb.net/P6_SO_PEKOCKO?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(`mongodb+srv://${process.env.USER_DB}:${process.env.DB_PASSWORD}@cluster0.0paei.mongodb.net/${process.env.DB_BASE_NAME}?retryWrites=true&w=majority`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
