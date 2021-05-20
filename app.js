@@ -4,8 +4,6 @@ const mongoose = require("mongoose");
 const path = require("path");
 const sauceRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
-
-const helmet = require("helmet");
 require("dotenv").config();
 
 //Connection à la base de données
@@ -27,7 +25,6 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
-app.use(helmet());
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/api/auth", userRoutes);
