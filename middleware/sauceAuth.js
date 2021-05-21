@@ -5,7 +5,7 @@ const mongoSanitize = require("mongo-sanitize");
 module.exports = (req, res, next) => {
   const id = mongoSanitize(req.params.id);
   const token = req.headers.authorization.split(" ")[1];
-  const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+  const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
   const userId = decodedToken.userId;
   sauce
     .findOne({ _id: id })
